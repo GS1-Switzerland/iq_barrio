@@ -2,7 +2,7 @@ name: iqual Barrio Subtheme
 type: theme
 description: 'iqual Bootstrap Barrio SubTheme.'
 
-core_version_requirement: ^9.5 || ^10
+core_version_requirement: ^9.5 || ^10 || ^11
 base theme: bootstrap_barrio
 'interface translation project': iq_barrio
 'interface translation server pattern': themes/custom/iq_barrio/translations/iq_barrio-%language.po
@@ -45,3 +45,4 @@ regions:
   footer_third: 'Footer third'
   footer_fourth: 'Footer fourth'
   footer_fifth: 'Footer fifth'
+
