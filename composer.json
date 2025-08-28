@@ -10,15 +10,96 @@
     "issues": "https://github.com/iqual-ch/iq_barrio/issues",
     "source": "https://github.com/iqual-ch/iq_barrio"
   },
+  "repositories": {
+    "drupal/advanced_menu_condition": {
+      "type": "vcs",
+      "url": "https://git.drupalcode.org/issue/advanced_menu_condition-3428786.git"
+    },
+    "drupal/pagetree": {
+      "type": "git",
+      "url": "https://git.drupalcode.org/issue/pagetree-3523312.git"
+    },
+    "styling_profiles": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/styling_profiles"
+    },
+    "iq_barrio": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/iq_barrio"
+    },
+    "iq_barrio_helper": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/iq_barrio_helper"
+    },
+    "iq_barrio_composer_update": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/iq_barrio_composer_update"
+    },
+    "iqual/iq_entity_browsers": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/iq_entity_browsers"
+    },
+    "iqual/iq_bef_extensions": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/iq_bef_extensions"
+    },
+    "iq_scss_compiler": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/iq_scss_compiler"
+    },
+    "iq_multidomain_extensions": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/iq_multidomain_extensions"
+    },
+    "iq_news": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/iq_news"
+    },
+    "iqual_custom": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/iqual_custom"
+    },
+    "iq_blog": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/iq_blog"
+    },
+    "drupal/pagedesigner_responsive_images": {
+      "type": "vcs",
+      "url": "https://git.drupalcode.org/issue/pagedesigner_responsive_images-3542735"
+    },
+    "iqual/iq_stage_file_proxy": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/iq_stage_file_proxy"
+    },
+    "drupal/pagedesigner": {
+      "type": "vcs",
+      "url": "https://git.drupalcode.org/issue/pagedesigner-3438542.git"
+    },
+    "iq_pagedesigner": {
+      "type": "vcs",
+      "url": "https://github.com/GS1-Switzerland/iq_pagedesigner.git"
+    },
+    "drupal/fontyourface": {
+      "type": "vcs",
+      "url": "https://git.drupalcode.org/issue/fontyourface-3465748.git"
+    },
+    "drupal": {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    },
+    "js-libraries": {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  },
   "require": {
     "php": "^8.1",
     "drupal/core": "^9.5 || ^10 || ^11",
     "drupal/bootstrap_barrio": "~5.1.0",
     "iqual/iq_barrio_composer_update": "3.x-dev",
-    "iqual/iq_barrio_helper": "^4.0",
     "drupal/pagedesigner_responsive_images": "^3.0 || ^4.0",
     "bower-asset/fontawesome": "5.15.2",
-    "bower-asset/bootstrap": "4.1.1",
+    "bower-asset/bootstrap": "^5.3.8",
     "bower-asset/owl-carousel2": "2.3.4",
     "bower-asset/popper.js": "1.14.3",
     "npm-asset/ekko-lightbox": "5.3.0"
@@ -33,6 +114,12 @@
         "[https://dgo.to/3222326]: Libraries should be improved": "https://www.drupal.org/files/issues/2025-03-19/library_improvements_and_fix_3222326_6.patch",
         "DUP-74: Upgrade to CkEditor5": "public/themes/custom/iq_barrio/patches/bootstrap_barrio_ckeditor5_upgrade.patch"
       }
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "drupal/core-composer-scaffold": true,
+      "iqual/iq_barrio_composer_update": true
     }
   }
 }
