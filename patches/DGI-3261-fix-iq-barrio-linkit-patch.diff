@@ -1,17 +1,17 @@
 diff --git a/js/linkit.autocomplete.js b/js/linkit.autocomplete.js
-index 63a7c8b..4aa835f 100644
+index e790077..2131d57 100644
 --- a/js/linkit.autocomplete.js
 +++ b/js/linkit.autocomplete.js
 @@ -64,7 +64,7 @@
     */
    function selectHandler(event, ui) {
-     var linkSelector = event.target.getAttribute('data-drupal-selector');
--    var $context = $(event.target).closest('form,fieldset,tr');
-+    var $context = $(event.target).closest('.linkit-widget-container');
- 
      // Set hidden inputs for "href_dirty_check" and the "options" field.
+-    const $context = $(event.target).closest('form,fieldset,tr');
++    const $context = $(event.target).closest('.linkit-widget-container');
      setMetadata(ui.item, $context);
-@@ -109,7 +109,10 @@
+ 
+     event.target.value = ui.item.path;
+@@ -106,7 +106,10 @@
        throw 'Missing path param. ' + JSON.stringify(metadata);
      }
  
@@ -24,10 +24,10 @@ index 63a7c8b..4aa835f 100644
      if (entity_type_id || entity_uuid || substitution_id) {
        if (!entity_type_id || !entity_uuid || !substitution_id) {
 diff --git a/linkit.module b/linkit.module
-index 12dab61..150b52b 100644
+index fd020eb..28a92ec 100644
 --- a/linkit.module
 +++ b/linkit.module
-@@ -113,6 +113,9 @@ function linkit_form_editor_link_dialog_alter(&$form, FormStateInterface $form_s
+@@ -107,6 +107,9 @@ function linkit_form_editor_link_dialog_alter(&$form, FormStateInterface $form_s
      ];
    }
  
@@ -38,7 +38,7 @@ index 12dab61..150b52b 100644
    array_unshift($form['#submit'], 'linkit_form_editor_link_dialog_submit');
  }
 diff --git a/src/Plugin/Field/FieldWidget/LinkitWidget.php b/src/Plugin/Field/FieldWidget/LinkitWidget.php
-index ef5e2f7..411ac44 100644
+index ef5e2f7..a88515e 100644
 --- a/src/Plugin/Field/FieldWidget/LinkitWidget.php
 +++ b/src/Plugin/Field/FieldWidget/LinkitWidget.php
 @@ -204,7 +204,19 @@ class LinkitWidget extends LinkWidget {
@@ -60,14 +60,14 @@ index ef5e2f7..411ac44 100644
 +
 +    return $group;
    }
-
+ 
    /**
 diff --git a/tests/src/FunctionalJavascript/LinkFieldTest.php b/tests/src/FunctionalJavascript/LinkFieldTest.php
-index d8febf0..d7c40f3 100644
+index d8febf0..74bd78f 100644
 --- a/tests/src/FunctionalJavascript/LinkFieldTest.php
 +++ b/tests/src/FunctionalJavascript/LinkFieldTest.php
 @@ -127,7 +127,7 @@ class LinkFieldTest extends WebDriverTestBase {
-
+ 
      $assert_session->elementContains('css', '#edit-field-test-link-wrapper', 'Start typing to find content or paste a URL and click on the suggestion below.');
      $widget_wrapper = $assert_session->elementExists('css', '#edit-field-test-link-wrapper');
 -    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
@@ -86,7 +86,7 @@ index d8febf0..d7c40f3 100644
      $assert_session->waitOnAutocomplete();
 @@ -160,10 +160,10 @@ class LinkFieldTest extends WebDriverTestBase {
      $assert_session->assertWaitOnAjaxRequest();
-
+ 
      // Check that the URL input field value shows the entity path.
 -    $url_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
 +    $url_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
@@ -95,11 +95,11 @@ index d8febf0..d7c40f3 100644
 -    $title_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][title]"]', $widget_wrapper);
 +    $title_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][title]"]', $widget_wrapper);
      $this->assertEquals('Foo', $title_input->getValue());
-
+ 
      // Give the node a title and save the page.
 @@ -188,7 +188,7 @@ class LinkFieldTest extends WebDriverTestBase {
      $this->drupalGet('node/add/page');
-
+ 
      $widget_wrapper = $assert_session->elementExists('css', '#edit-field-test-link-wrapper');
 -    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
 +    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
@@ -108,7 +108,7 @@ index d8febf0..d7c40f3 100644
      $assert_session->waitOnAutocomplete();
 @@ -197,10 +197,10 @@ class LinkFieldTest extends WebDriverTestBase {
      $assert_session->assertWaitOnAjaxRequest();
-
+ 
      // Check that the URL input field value shows the entity path.
 -    $url_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
 +    $url_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
@@ -117,20 +117,20 @@ index d8febf0..d7c40f3 100644
 -    $title_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][title]"]', $widget_wrapper);
 +    $title_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][title]"]', $widget_wrapper);
      $this->assertEquals('Anchored Entity', $title_input->getValue());
-
+ 
      // Add an anchor to the URL field.
 @@ -218,7 +218,7 @@ class LinkFieldTest extends WebDriverTestBase {
-
+ 
      // Verify anchor persists when visiting the edit form.
      $this->drupalGet('node/2/edit');
 -    $url_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
 +    $url_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
      $this->assertEquals($entity2->toUrl()->toString() . '#with-anchor?search=1', $url_input->getValue());
-
+ 
      // Test issue when linking to content with ampersands.
 @@ -230,7 +230,7 @@ class LinkFieldTest extends WebDriverTestBase {
      $this->drupalGet('node/add/page');
-
+ 
      $widget_wrapper = $assert_session->elementExists('css', '#edit-field-test-link-wrapper');
 -    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
 +    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
@@ -139,15 +139,15 @@ index d8febf0..d7c40f3 100644
      $assert_session->waitOnAutocomplete();
 @@ -239,14 +239,14 @@ class LinkFieldTest extends WebDriverTestBase {
      $assert_session->assertWaitOnAjaxRequest();
-
+ 
      // Check that the title was populated automatically.
 -    $title_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][title]"]', $widget_wrapper);
 +    $title_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][title]"]', $widget_wrapper);
      $this->assertEquals('Zip & Zap', $title_input->getValue());
-
+ 
      // Test external URLs.
      $this->drupalGet('node/add/page');
-
+ 
      $widget_wrapper = $assert_session->elementExists('css', '#edit-field-test-link-wrapper');
 -    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
 +    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
@@ -156,12 +156,12 @@ index d8febf0..d7c40f3 100644
      $assert_session->waitOnAutocomplete();
 @@ -259,7 +259,7 @@ class LinkFieldTest extends WebDriverTestBase {
      $assert_session->assertWaitOnAjaxRequest();
-
+ 
      // Set a manual value for the title.
 -    $title_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][title]"]', $widget_wrapper);
 +    $title_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][title]"]', $widget_wrapper);
      $title_input->setValue('This is google');
-
+ 
      // Give the node a title and save the page.
 @@ -275,11 +275,11 @@ class LinkFieldTest extends WebDriverTestBase {
      // Test that it is possible to add just the anchor.
@@ -179,7 +179,7 @@ index d8febf0..d7c40f3 100644
      $page->pressButton('Save');
 @@ -293,7 +293,7 @@ class LinkFieldTest extends WebDriverTestBase {
      $email = 'drupal@example.com';
-
+ 
      $widget_wrapper = $assert_session->elementExists('css', '#edit-field-test-link-wrapper');
 -    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
 +    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
@@ -189,7 +189,7 @@ index d8febf0..d7c40f3 100644
 @@ -301,10 +301,10 @@ class LinkFieldTest extends WebDriverTestBase {
      $first_result->click();
      $assert_session->assertWaitOnAjaxRequest();
-
+ 
 -    $url_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
 +    $url_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
      $this->assertEquals('mailto:' . $email, $url_input->getValue());
@@ -197,11 +197,11 @@ index d8febf0..d7c40f3 100644
 -    $title_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][title]"]', $widget_wrapper);
 +    $title_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][title]"]', $widget_wrapper);
      $this->assertEquals((string) new FormattableMarkup('E-mail @email', ['@email' => $email]), $title_input->getValue());
-
+ 
      // Give the node a title and save the page.
 @@ -323,7 +323,7 @@ class LinkFieldTest extends WebDriverTestBase {
      $url = \Drupal::request()->getSchemeAndHttpHost() . '/node/1';
-
+ 
      $widget_wrapper = $assert_session->elementExists('css', '#edit-field-test-link-wrapper');
 -    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
 +    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
@@ -211,7 +211,7 @@ index d8febf0..d7c40f3 100644
 @@ -331,10 +331,10 @@ class LinkFieldTest extends WebDriverTestBase {
      $first_result->click();
      $assert_session->assertWaitOnAjaxRequest();
-
+ 
 -    $url_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
 +    $url_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
      $this->assertEquals($url, $url_input->getValue());
@@ -223,7 +223,7 @@ index d8febf0..d7c40f3 100644
      $page->fillField('title[0][value]', 'Host test node 5');
 @@ -350,7 +350,7 @@ class LinkFieldTest extends WebDriverTestBase {
      $this->drupalGet('node/add/page');
-
+ 
      $widget_wrapper = $assert_session->elementExists('css', '#edit-field-test-link-wrapper');
 -    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
 +    $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
@@ -233,16 +233,16 @@ index d8febf0..d7c40f3 100644
 @@ -358,11 +358,11 @@ class LinkFieldTest extends WebDriverTestBase {
      $first_result->click();
      $assert_session->assertWaitOnAjaxRequest();
-
+ 
 -    $url_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][uri]"]', $widget_wrapper);
 +    $url_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
-
+ 
      $this->assertEquals(Url::fromRoute('<front>')->toString(), $url_input->getValue());
      // Check that the title was populated automatically.
 -    $title_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][title]"]', $widget_wrapper);
 +    $title_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][title]"]', $widget_wrapper);
      $this->assertEquals('Front page', $title_input->getValue());
-
+ 
      // Give the node a title and save the page.
 @@ -378,7 +378,7 @@ class LinkFieldTest extends WebDriverTestBase {
        $this->drupalGet('node/add/page');
@@ -252,7 +252,7 @@ index d8febf0..d7c40f3 100644
 +      $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
        $uri_input->setValue($invalid_string);
        $assert_session->assertWaitOnAjaxRequest();
-
+ 
 @@ -391,7 +391,7 @@ class LinkFieldTest extends WebDriverTestBase {
        $this->drupalGet('node/add/page');
        $page->fillField('title[0][value]', 'Valid string node ' . $key);
@@ -261,11 +261,4 @@ index d8febf0..d7c40f3 100644
 +      $uri_input = $assert_session->elementExists('css', 'input[name="field_test_link[0][linkit-widget-container][0][uri]"]', $widget_wrapper);
        $uri_input->setValue($invalid_string);
        $assert_session->assertWaitOnAjaxRequest();
-
-@@ -400,4 +400,4 @@ class LinkFieldTest extends WebDriverTestBase {
-     }
-   }
-
--}
-+}
-\ No newline at end of file
+ 
