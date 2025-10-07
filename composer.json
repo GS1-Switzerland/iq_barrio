@@ -14,6 +14,7 @@
     "php": "^8.1",
     "drupal/core": "^9.5 || ^10",
     "drupal/bootstrap_barrio": "~5.1.0",
+    "drupal/linkit": "^7.0",
     "iqual/iq_barrio_composer_update": "3.x-dev",
     "iqual/iq_barrio_helper": "^4.0",
     "drupal/pagedesigner_responsive_images": "^3.0 || ^4.0",
@@ -26,11 +27,12 @@
   "extra": {
     "patches": {
       "drupal/linkit": {
-        "[https://dgo.to/3105061]: Link attributes missing with bootstrap theme": "https://www.drupal.org/files/issues/2024-01-05/linkit-selector-6.1.x-3105061-8.diff"
+        "[https://dgo.to/3105061]: Link attributes missing with bootstrap theme": "https://git.drupalcode.org/project/linkit/-/merge_requests/140.diff"
       },
       "drupal/bootstrap_barrio": {
         "[https://dgo.to/3421337]: Unexpected token \"name\" of value \"if\"": "https://git.drupalcode.org/project/bootstrap_barrio/-/merge_requests/75/diffs.diff?diff_id=758849",
-        "[https://dgo.to/3222326]: Libraries should be improved": "https://www.drupal.org/files/issues/2025-03-19/library_improvements_and_fix_3222326_6.patch"
+        "[https://dgo.to/3222326]: Libraries should be improved": "https://www.drupal.org/files/issues/2025-03-19/library_improvements_and_fix_3222326_6.patch",
+        "[https://dgo.to/3549772]: Support for CkEditor5": "https://git.drupalcode.org/project/bootstrap_barrio/-/merge_requests/113.diff"
       }
     }
   }
