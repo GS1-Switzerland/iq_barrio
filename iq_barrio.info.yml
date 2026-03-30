@@ -8,8 +8,9 @@ base theme: bootstrap_barrio
 'interface translation server pattern': themes/custom/iq_barrio/translations/iq_barrio-%language.po
 
 dependencies:
-  - iq_barrio_helper
-  - pagedesigner_responsive_images
+  - iq_barrio_helper:iq_barrio_helper
+  - pagedesigner_responsive_images:pagedesigner_responsive_images
+  - jquery_deprecated_functions:jquery_deprecated_functions
 
 libraries:
   - iq_barrio/global-styling
@@ -18,11 +19,6 @@ libraries:
 libraries-extend:
   webform/webform.form:
     - bootstrap_barrio/form
-
-libraries-override:
-  core/jquery:
-    js:
-      assets/vendor/jquery/jquery.min.js: 'https://code.jquery.com/jquery-3.7.1.min.js'
 
 ckeditor5-stylesheets:
   - resources/css/ckeditor.css
